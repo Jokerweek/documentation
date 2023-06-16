@@ -5,8 +5,8 @@ theme: just-the-docs
 url: https://just-the-docs.github.io
 
 aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
-
+  Jokerweek 2023 : https://jokerweek.ugent.be/2023/
+  
 callouts:
   highlight:
     color: yellow

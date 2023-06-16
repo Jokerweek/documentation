@@ -6,11 +6,6 @@ grand_parent: Structure
 ---
 # /pages/ directory
 
-<!-- explain folder
-- what it has to do with Nextjs
-- why tsx
-- example page structure-->
-
 This folder contains all the pages of the application. Pages are the smallest unit of routing in [Next.js](https://nextjs.org/). Each file in this folder represents a page in the application. The structure of each page is as follows:
 
 ```tsx
@@ -26,7 +21,9 @@ export default function Sponsors() {
 }
 ```
 {: .highlight }
-With the exection of the `index.tsx` and `_app.tsx` files. Which are respectively the home page and the main application file.
+With the exection of the `home.tsx`, `index.tsx` and `_app.tsx` files. Which are respectively the home page, the landing page and the main application file.
+
+---
 
 ## _App.tsx
 ### Overview
@@ -126,7 +123,141 @@ It ensures that the image send to each user is optimized for their device and co
 
 The custom `Timer` component is counting down to a specific deadline. Inside it, a `Link` component is used, providing navigation to the `home` page. The `Link` component is from the `next/link` library. It ensures that the page is preloaded before the user clicks on it, providing a better user experience.
 
-<img src="/images/icons/link.svg">
-[Timer component](http://example.com/)
+### Dependencies
 
-## 
+- [Timer component](components#timertsx) for the countdown timer
+- [SponsorsLogos component](components#sponsorslogostsx) for the sponsors logos
+
+## home.tsx
+
+The file has two primary functions, `Mobile()` and `Desktop()`, for rendering the home page on mobile and desktop devices, respectively. Each function returns a collage of animated pictures on a backgound image. The collage is made up of clickable images (`Pin` components) that link to various pages on the website.
+
+{: .important }
+> To make this whole collage responsive, all dimentions are expessed in function of the viewport width `vw`. This will result in a collage that scales with the viewport width and adapt to different screen sizes, while keeping the initial proportions.
+
+### Structure
+
+The `Pin` component is utilized to place various clickable images at specific locations on the screen.
+
+```tsx
+<Pin
+  infinite
+  box={["112.5vw", "47vw", "11vw", "10.6vw"]}
+  skew="0, 24deg"
+  href="weekmenu"
+  order={2}
+>
+  <Image
+    width={300}
+    height={150}
+    className="w-[32.4vw] -translate-x-[11vw] -translate-y-[1.9vw]"
+    src="/images/bg/mobielKlikvelden/Weekmenu.png"
+    alt="logo"
+  />
+</Pin>
+```	
+The following attributes are used to customize the `Pin` component:
+
+- `infinite`: Determines whether the animation should loop infinitely. This attribute is optional and defaults to `false`.
+
+- `box`: Determines the size and position of the `Pin` component, more precisely the clickable area. The first two values determine the **position** of the `Pin` component, while the last two values determine the **size** of the `Pin` component.
+```ts
+box={["top", "left", "height", "width"]}
+```
+
+- `skew`: Determines the skew of the `Pin` component's clickable are. The first value determines the skew along the horizontal axis, while the second value determines the skew along the vertical axis.
+
+- `href`: Determines the link the user is directed to when they click on the `Pin` component.
+
+- `order`: Determines the order in which the `Pin` component is rendered, to create a cascading revealing effect. This attribute is optional and defaults to `0`.
+
+In the `Image` child:
+- `width` and `height` are used to optimize the image for web. A maximum expected size required. (units = pixels)
+
+- `className` is used to position the image on top of the clickable area. It uses the following format:
+```ts
+className="w-[width image] translate-x-[horizontal offset]
+    ↪ translate-y-[vertical offset]"
+```
+There is also a `handleAnim()` function in the `Desktop` component that is designed to handle animation on the desktop version of the site. It triggers the reveal of the component when the user hovers over it.
+
+Lastly, there's the `Home()` function, which serves as the default export of this file. This function uses the custom `useBreakpoint()` hook to determine whether to render the mobile or desktop version of the home page. The `useBreakpoint()` hook returns `true` or `false` based on the viewport width.
+
+### Customization
+
+To customize the website:
+
+- **Change Images**: Modify the `src` attributes in the `Image` components to point to the new images you want to use.
+
+- **Change Links**: Modify the `href` attributes in the `Pin` components to change where the user is directed when they click on a particular image.
+
+- **Alter Position and Size of Elements**: Tweak the values in the `box` attribute of the `Pin` component AND of the the `Image` components.
+
+- **Adjust Animation order**: Change the `order` attribute of the `Pin` components to change the order in which they are revealed.
+
+{: .highlight }
+> uncomment the following comment in the Pin component to visualise the clickable areas: ```// border: "1px solid red",```
+
+### Dependencies
+
+- [Pin component](components#pintsx) for the clickable images
+- [useBreakpoint hook](hooks#usebreakpointhook) for switching between mobile and desktop versions
+
+## expo.tsx
+
+The `Expo` component shows a Google Maps iframe and provides a link to the map. It's encapsulated within a `SubPage` component that manages the layout and styles common to all the subpages. It also provides the title, footer and back button.
+
+### Structure
+
+```tsx
+const googleMapsUrl = "...";
+const googleMapsEmbedUrl = "...";
+```
+
+These are two constant strings representing URLs. `googleMapsUrl` is a link to the actual Google Maps page, while `googleMapsEmbedUrl` is a link used for embedding the map in an `iframe`. Both are provided by Google Maps when creating a [custom map](https://mymaps.google.com).
+
+```tsx
+<SubPage title="Expo" image="/images/bg/doorklik/expo.png"> ... </SubPage>
+```
+
+The `Expo` component is wrapped in a `SubPage` component. `SubPage` accepts `title` and `image` props that set the title and top image of the subpage, respectively.
+
+```tsx
+<a href={googleMapsUrl} className="underline underline-offset-4">GOOGLE MAPS</a>
+```
+
+This `a` tag is an HTML anchor used to create a hyperlink to `googleMapsUrl`.
+
+```tsx
+<iframe src={googleMapsEmbedUrl} width="100%" height="480" title="Google Maps" />
+```
+
+This `iframe` tag is used to embed the Google Maps page in the `Expo` page. It uses `googleMapsEmbedUrl` as the source.
+
+## huisregels.tsx
+
+Speaks for itself. It's just a list of rules.
+```tsx
+<ul>
+  <li>...</li>
+  <li>...</li>
+  ...
+</ul>
+```
+
+## randactiviteiten.tsx
+This page consists primarily of text which make intensive use of the native HTML tags `<h1>` to `<h4>`, `<br>` and `<a>`. Which stands for titles, back to line and links respectively. The customization is handled with tailwind classes.
+
+```tsx	
+<Scores BA1={0} BA2={0} BA3={0} MA1={0} MA2={0} />
+```
+It also illustrates the current score of the different years in the "Jarenstrijd". The flags animation is made with the `<Scores>` component.
+
+### Dependencies
+
+- [Scores component](components#scorestsx) for the flags animation
+
+## sponsors.tsx
+
+
+

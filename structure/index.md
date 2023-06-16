@@ -2,11 +2,12 @@
 layout: default
 title: Structure
 has_children: true
+nav_order: 3
 ---
 
 # Structure of the Project
 
-This page provides an overview of the structure of the `website-2023` project. Click on a file name to jump to its explanation.
+This page provides an overview of the structure of the `website-2023` project. Click on a file name to jump to its granular explanation.
 
 ## Source directory
 <div style="display: flex; gap: 1rem">
