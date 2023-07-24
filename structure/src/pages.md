@@ -259,5 +259,10 @@ It also illustrates the current score of the different years in the "Jarenstrijd
 
 ## sponsors.tsx
 
+This page only contains the sponsors logos. The logos are displayed using the `SponsorsLogos` component.
 
+### Dependencies
 
+- [SponsorsLogos component](components#sponsorslogostsx) for the sponsors logos
+
+lol
